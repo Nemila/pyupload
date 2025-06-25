@@ -16,7 +16,7 @@ def main():
         return
 
     filename_regex = re.compile(
-        r"^.+-(TV|MOVIE)-\d+-S\d{2}-E\d{2}(?:-\[\w{2,3}\])?(\.[^.]+)?$",
+        r"^.+-(TV|MOVIE)-\d+-S\d{2}-E\d{2}(?:-(\[[A-Z]{2,3}(?:\+[A-Z]{2,3})*\]|[A-Z]{2,3}))?(\.[^.]+)?$",
         re.IGNORECASE
     )
 

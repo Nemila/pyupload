@@ -41,7 +41,7 @@ class Hydrax:
                 )
             }
 
-            print("Uploading file to Hydrax...")
+            print(f"Uploading {filename} to Hydrax...")
 
             response = requests.post(
                 f"{self.base_url}/{self.api_key}",

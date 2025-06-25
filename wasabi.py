@@ -26,6 +26,7 @@ class Wasabi:
     def upload_file(self, file_path, key):
         try:
             file_path = Path(file_path)
+            filename = file_path.name
             local_file_size = file_path.stat().st_size
 
             try:
@@ -43,7 +44,7 @@ class Wasabi:
 
             except ClientError as e:
                 if e.response["Error"]["Code"] == "404":
-                    print("Uploading file to Wasabi...")
+                    print(f"Uploading {filename} to Wasabi...")
                 else:
                     return {"ok": False, "msg": "Something went wrong checking file existence"}
 
