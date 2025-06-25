@@ -30,43 +30,46 @@ def main():
                 filename = file_path.name
 
                 if not filename_regex.match(filename):
-                    print(f"Invalid filename: {filename}")
                     failed_service.add(
                         file=str(file_path),
                         stage="start",
                         message="Invalid filename"
                     )
+                    print(f"Invalid filename: {filename}")
                     continue
 
                 relative_path = Path(str(file_path).split("TV Shows", 1)[-1]).as_posix().lstrip("/")
                 key = f"media/{relative_path}"
 
                 wasabi_res = wasabi.upload_file(file_path, key)
-
                 if not wasabi_res["ok"]:
                     failed_service.add(
                         file=str(file_path),
                         stage="wasabi",
                         message=wasabi_res["message"] 
                     )
+                    print(wasabi_res["message"])
+                    continue
 
                 hydrax_res = hydrax.upload_file(file_path)
                 if not hydrax_res["ok"]:
                     failed_service.add(
                         file=str(file_path),
                         stage="hydrax",
-                        message=hydrax_res["msg"]
+                        message=hydrax_res["message"]
                     )
+                    print(hydrax_res["message"])
+                    continue
+
+                try:
+                    requests.get(f"https://catoonhub.com/api/hydrax/{hydrax_res['res']}?filename={filename}")
+                except Exception as e:
+                    print(f"Error notifying completion: {e}")
 
                 if hydrax_res["ok"] and wasabi_res["ok"]:
                     delete_file(file_path)
 
             failed_service.save()
-
-            try:
-                requests.get("https://catoonhub.com/api/hydrax")
-            except Exception as e:
-                print(f"Error notifying completion: {e}")
 
     except Exception as e:
         print(f"Error: {e}")

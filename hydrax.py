@@ -52,17 +52,17 @@ class Hydrax:
             data = response.json()
 
             if not response.ok or not data.get("status"):
-                return {"ok": False, "msg": "Failed to upload", "res": None}
+                return {"ok": False, "message": "Failed to upload", "res": None}
 
             print(f"File uploaded: {data.get('slug')}")
 
             return {
                 "ok": True,
-                "msg": "File uploaded",
+                "message": "File uploaded",
                 "res": data.get("slug")
             }
 
         except Exception as e:
-            return {"ok": False, "msg": str(e), "res": None}
+            return {"ok": False, "message": str(e), "res": None}
 
 hydrax = Hydrax(HYDRAX_API_KEY) 
