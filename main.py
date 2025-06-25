@@ -38,7 +38,9 @@ def main():
                     )
                     continue
 
-                key = f"media{str(file_path).split('media', 1)[1]}"
+                relative_path = Path(str(file_path).split("TV Shows", 1)[-1]).as_posix().lstrip("/")
+                key = f"media/{relative_path}"
+
                 wasabi_res = wasabi.upload_file(file_path, key)
 
                 if not wasabi_res["ok"]:
