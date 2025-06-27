@@ -12,6 +12,10 @@ from failed import failed_service
 
 def process_file(file_path):
     filename = file_path.name
+    filename_regex = re.compile(
+        r"^.+-(TV|MOVIE)-\d+-S\d{2}-E\d{2}(?:-(\[[A-Z]{2,3}(?:\+[A-Z]{2,3})*\]|[A-Z]{2,3}))?(\.[^.]+)?$",
+        re.IGNORECASE
+    )
 
     if not filename_regex.match(filename):
         failed_service.add(
@@ -59,11 +63,6 @@ def main():
     if not media_folder.exists():
         print(f"Media folder {media_folder} does not exist")
         return
-
-    filename_regex = re.compile(
-        r"^.+-(TV|MOVIE)-\d+-S\d{2}-E\d{2}(?:-(\[[A-Z]{2,3}(?:\+[A-Z]{2,3})*\]|[A-Z]{2,3}))?(\.[^.]+)?$",
-        re.IGNORECASE
-    )
 
     lock = FileLock(LOCK_FILE_PATH)
     
