@@ -7,7 +7,6 @@ from typing import Dict, List, Literal
 from config import FAILED_FILE_PATH
 
 class FailedService:
-
     def __init__(self):
         self.failed_file = FAILED_FILE_PATH
         self.data: List[Dict] = self._load_data()

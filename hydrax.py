@@ -32,7 +32,6 @@ class Hydrax:
         try:
             file_path = Path(file_path)
             filename = file_path.name
-
             files = {
                 "file": (
                     filename,
@@ -40,20 +39,16 @@ class Hydrax:
                     self._get_content_type(filename)
                 )
             }
-
             print(f"Uploading {filename} to Hydrax...")
-
             response = requests.post(
                 f"{self.base_url}/{self.api_key}",
                 files=files,
                 stream=True
             )
-
             data = response.json()
 
             if not response.ok or not data.get("status"):
                 return {"ok": False, "message": "Failed to upload", "res": None}
-
             print(f"File uploaded: {data.get('slug')}")
 
             return {
