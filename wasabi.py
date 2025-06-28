@@ -37,7 +37,7 @@ class Wasabi:
 
                 if existing_object["ContentLength"] == local_file_size:
                     return {
-                        "ok": False,
+                        "ok": True,
                         "msg": f"File {key} already exists and is complete, skipping upload"
                     }
                 print(f"File {key} exists but size differs, re-uploading")
